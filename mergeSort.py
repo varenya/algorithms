@@ -9,10 +9,12 @@ def mergeSort(arr,low,high):
 
 	left = mergeSort(arr,low,mid)
 	right = mergeSort(arr,mid+1,high)
-
+	print left
+	print right
 	ans = merge(left,right)
 
 	return ans
+count = 0
 
 def merge(left,right):
 
@@ -25,6 +27,8 @@ def merge(left,right):
 			ans[k] = left[i]
 			i +=1
 		else:
+			global count
+			count += n2 - i -1
 			ans[k] = right[j]
 			j += 1
 		k += 1
@@ -35,13 +39,13 @@ def merge(left,right):
 			i +=1
 	if j!=n2:
 		while(j < n1):
+			count += n2-i-1
 			ans[k] = right[j]
 			k +=1
 			j +=1
+	print "count",count
 	return ans
 
-arr = [9,8,7,6,5,4,1,1,0]
+arr = [2,1,4,3]
 print "before sorting",arr
 print "after sorting",mergeSort(arr,0,len(arr)-1)
-
-

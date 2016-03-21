@@ -18,7 +18,7 @@ void selectionSort(int a[],int n){
         a[j] = temp;
       }
     }
-    printArray(a,n);
+    // printArray(a,n);
   }
 }
 

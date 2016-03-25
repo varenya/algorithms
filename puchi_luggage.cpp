@@ -20,7 +20,7 @@ void mergeSort(long long a[],int low,int high){
 
 
 void merge(long long a[],int low,int mid,int high){
-  int i=0,j=0,k=0;
+  int i=0,j=0,k=0,count = 0;
   int n1 = mid-low+1;
   int n2 = high - mid;
   long long L[n1],R[n2];
@@ -45,6 +45,7 @@ void merge(long long a[],int low,int mid,int high){
     {
       // cout << "Inside" << endl;
       a[k] = L[i];
+      freq[L[i]-1] += count;
       k++;
       i++;
     }
@@ -52,12 +53,7 @@ void merge(long long a[],int low,int mid,int high){
     {
       // cout << "outside" << endl;
       a[k] = R[j];
-      for(int t=i;t<n1;t++)
-      {
-        // cout << "frequency" << endl;
-        // cout << L[t] << endl;
-        freq[L[t]-1] += 1;
-      }
+      count++;
       k++;
       j++;
     }

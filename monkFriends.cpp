@@ -9,11 +9,9 @@ int main(void){
 	int T;
 	cin >> T;
 	int N,M;
-	cin >> N >>  M;
 	//cout << "N : " << N << "M :" << M << endl;
 	while(T--){
-
-		cout << T << "TestCase" << endl;
+		cin >> N >>  M;
 		set <ll> firstN;
 		set <ll>::iterator it;
 		ll temp;

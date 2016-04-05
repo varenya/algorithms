@@ -3,6 +3,7 @@
 #include <set>
 #include <vector>
 #include <algorithm>
+#include <climits>
 #define MAX 100007
 #define ll long long
 int arr[MAX];
@@ -60,6 +61,7 @@ void printVector(vector <ll> input){
 int getDifference(int N){
 
 	ll diff = 0;
+	ll min_item=LONG_MAX,max_item=LONG_MIN;
 	vector <ll> unique;
 	for(int i=1;i<=N;i++){
 
@@ -68,17 +70,14 @@ int getDifference(int N){
 			if(root(j) == i)
 				count ++;
 		}
-		if (count)
-			unique.push_back(count);
+		if (count){
+			if(count > max_item)
+				max_item = count;
+			if(count < min_item)
+				min_item = count;
+		}
 	}
-	if ( unique.size() !=0){
-		vector <ll>::iterator it_min,it_max;
-		it_min = min_element(unique.begin(),unique.end());
-		it_max = max_element(unique.begin(),unique.end());
-		//cout << "Vector " << endl;
-		//printVector(unique);
-		diff = *it_max - *it_min;
-	}
+	diff = max_item - min_item;
 	return diff;
 }
 

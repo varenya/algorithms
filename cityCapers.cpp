@@ -72,10 +72,12 @@ int getDifference(int N){
 			unique.push_back(count);
 	}
 	if ( unique.size() !=0){
-		sort(unique.begin(),unique.end());
+		vector <ll>::iterator it_min,it_max;
+		it_min = min_element(unique.begin(),unique.end());
+		it_max = max_element(unique.begin(),unique.end());
 		//cout << "Vector " << endl;
 		//printVector(unique);
-		diff = unique.back()-unique.front();
+		diff = *it_max - *it_min;
 	}
 	return diff;
 }

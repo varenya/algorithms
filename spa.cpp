@@ -22,7 +22,7 @@ int main(void)
 	int T;
 	cin >> T;
 	while(T--) {
-		//initialize();
+		initialize();
 		string s;
 		//set <char> set_char;
 		cin >> s;
@@ -47,19 +47,28 @@ int main(void)
 			prod = prod + (freq[s[i]]*weight[s[i]]);
 
 		}
-		// map <char,int>::iterator it;
 		prod = 0;
+		for(it=weight.begin();it!=weight.end();it++)
+		{
+			//cout << " char :" << it->first << " weight : " << it->second << " frequency :" << freq[it->first] << endl;
+			prod = prod + (freq[it->first]*it->second);
+		}
+		// map <char,int>::iterator it;
+		//prod = 0;
 		for(it=freq.begin();it!=freq.end();it++){
-			tw += weight[it->first];
-			prod += it->second * weight[it->first];
+			if (it->second !=0)
+				tw += weight[it->first];
+			//prod += it->second * weight[it->first];
 		}
 
-		// cout << "tw " << tw << endl;
+		//cout << "tw " << tw << endl;
 		//cout << "prod " << prod << endl;
 
 		ll tl = s.size();
 		//cout << "tl " << tl << endl;
 		result = (10 * prod) / float(tl * tw);
+		//cout << "result " << endl;
 		printf("%.2f\n",result);
 	}
 }
+

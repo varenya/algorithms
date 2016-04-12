@@ -2,6 +2,8 @@
 #include <vector>
 #include <set>
 #include <map>
+#include <stdlib.h>
+#include <stdio.h>
 #define ll long long
 using namespace std;
 
@@ -17,30 +19,47 @@ void initialize(){
 
 int main(void)
 {
-        int T;
-        cin >> T;
-        while(T--) {
-                initialize();
-                string s;
-                cin >> s;
-                float result;
-                for(char i='a'; i<='z'; i++) {
-                        int temp;
-                        cin >> temp;
-                        weight[i] = temp;
-                }
-                for(i=0; i<s.size(); i++) {
-                        freq[s[i]] += 1;
-                }
+	int T;
+	cin >> T;
+	while(T--) {
+		//initialize();
+		string s;
+		//set <char> set_char;
+		cin >> s;
+		float result;
+		map <char,int>::iterator it;
+		for(char i='a'; i<='z'; i++) {
+			int temp;
+			cin >> temp;
+			weight[i] = temp;
+		}
+		for(int i=0; i<s.size(); i++) {
+			it = freq.find(s[i]);
+			if(it!=freq.end())
+				freq[s[i]] += 1;
+			else
+				freq[s[i]] = 1;
+		}
 
-                ll prod = 1;
-                ll tw = 0;
-                for(int =0; i<s.size(); i++) {
-                        prod = prod * (freq[s[i]]*weight[s[i]]);
-                        tw += weight[s[i]];
-                }
-                ll tl = s.size();
-                result = (10 * prod) / tl * tw;
-                cout << result << endl;
-        }
+		ll prod = 0;
+		ll tw = 0;
+		for(int i=0; i<s.size(); i++) {
+			prod = prod + (freq[s[i]]*weight[s[i]]);
+
+		}
+		// map <char,int>::iterator it;
+		prod = 0;
+		for(it=freq.begin();it!=freq.end();it++){
+			tw += weight[it->first];
+			prod += it->second * weight[it->first];
+		}
+
+		// cout << "tw " << tw << endl;
+		//cout << "prod " << prod << endl;
+
+		ll tl = s.size();
+		//cout << "tl " << tl << endl;
+		result = (10 * prod) / float(tl * tw);
+		printf("%.2f\n",result);
+	}
 }

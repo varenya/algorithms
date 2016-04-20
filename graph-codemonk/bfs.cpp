@@ -2,12 +2,12 @@
 #include <vector>
 #include <utility>
 #include <queue>
-#define MAX 11
+#define MAX 105
 using namespace std;
 
-bool vis[11];
-vector <int> adj[11];
-int level[11];
+bool vis[MAX];
+vector <int> adj[MAX];
+int level[MAX];
 
 void initialize(){
         for(int i=0; i<MAX; i++) {
@@ -37,6 +37,7 @@ void bfs(int s){
 
 
 int main(void){
+	int t;
         int nodes,edges,x,y,connectedComp = 0;
         cin  >> nodes;
         cin >> edges;
@@ -49,7 +50,7 @@ int main(void){
         initialize();
         bfs(1);
         cout << "node" << " " << "level" << endl;
-        for(int i=1;i<=8;i++){
+        for(int i=1;i<=nodes;i++){
                 cout << i << " " << level[i] << endl;
         }
 }

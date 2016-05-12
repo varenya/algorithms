@@ -4,6 +4,7 @@
 #include <queue>
 #include <set>
 #include <vector>
+#include <map>
 #include <utility>
 #define ll long long
 #define mp make_pair
@@ -30,18 +31,27 @@ int main(void){
 	cin >> N;
 	string s1;
 	cin >> s1;
+	map <char,ll> freq;
+	for(char ch='a';ch <='z';ch++){
+		freq[ch] = 0;
+	}
+	for(int i=0;i<s1.size();i++){
+		freq[s1[i]]++;
+	}
 	int Q;
 	cin >> Q;
 	char X,Y;
 	while(Q--){
 		cin >> X >> Y;
 		ll result;
-		if ( X!=Y )
-			result = count_substring(s1,N,X,Y) + count_substring(s1,N,Y,X);
+		if ( X!=Y ){
+			cout << freq[X] * freq[Y] << endl;
+		}
 		else
-			result = count_substring(s1,N,X,Y);
+		{
+			cout << freq[X] * freq[X]/2 << endl;
+		}
 
-		cout << result << endl;
 	}
 	return 0;
 }

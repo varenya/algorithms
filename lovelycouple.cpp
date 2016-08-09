@@ -29,19 +29,6 @@ void SieveOfEratosthenes(ll n)
 				prime[i] = false;
 		}
 	}
-	int i, j;
-
-	for (i = 0; i <= n; i++) {
-		factorCount[i] = 0;
-	}
-
-	for (i = 2; i <= n; i++) {
-		if (factorCount[i] == 0) { // Number is prime
-			for (j = i; j <= n; j += i) {
-				factorCount[j]++;
-			}
-		}
-	}
 
 	// Print all prime numbers
 	

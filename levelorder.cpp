@@ -26,15 +26,25 @@ node * newNode(int data){
 void levelOrder(node * root){
 	queue < node* > nodeq;
 	nodeq.push(root);
+	bool spiral = true;
 	while( !nodeq.empty() ){
 
 		node * curr = nodeq.front();
 		nodeq.pop();
 		cout << curr->data << " ";
-		if(curr->left)
-			nodeq.push(curr->left);
-		if(curr->right)
-			nodeq.push(curr->right);
+		if(spiral){
+			if(curr->left)
+				nodeq.push(curr->left);
+			if(curr->right)
+				nodeq.push(curr->right);
+		}
+		else{
+			if(curr->right)
+				nodeq.push(curr->right);
+			if(curr->left)
+				nodeq.push(curr->left);
+		}
+		spiral = !spiral;
 	}
 
 	cout << endl ;

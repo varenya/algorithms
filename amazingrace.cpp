@@ -33,7 +33,7 @@ int main(void){
 		vector <ll> heights(n+1);
 		t = n;
 		for(int i=1;i<=n;i++)
-			cin >> heights[i];
+		cin >> heights[i];
 
 		vector <int> left(n+1);
 		vector <int> right(n+1);
@@ -46,7 +46,7 @@ int main(void){
 		first.push(1);
 		for(int i=1;i<heights.size();i++){
 			while(!first.empty() && heights[i] > heights[first.top()])
-				first.pop();
+			first.pop();
 			if( !first.empty() ) left[i] = i-first.top();
 			else left[i] = i-1;
 
@@ -57,13 +57,13 @@ int main(void){
 		last.push(n);
 		for(int i=n-1;i>=0;i--){
 			while(!last.empty() && heights[i] > heights[last.top()])
-				last.pop();
+			last.pop();
 			if( !last.empty() )right[i] = last.top()-i;
 			else right[i] = n-i;
 
 			last.push(i);
 		}
-		
+
 		int max_index = -1;
 		int maxp = -1;
 		for(int i=1;i<=n;i++){

@@ -20,17 +20,11 @@ public Percolation(int N){
 
         this.N = N;
         this.numberOfOpen = 0;
-        grid = new boolean[N+1][N+1];
+        // Adding 2 so as to avoid many boundary checks
+        grid = new boolean[N+2][N+2];
         this.uf = new WeightedQuickUnionUF(N*N+3);
         this.satellite1 = 0;
         this.satellite2 = N*N + 1;
-        // Connecting all top cells to a satellite to have easier check if system percolates
-        for(int j=1; j<=N; j++)
-                this.uf.union(this.satellite1,j);
-        // Similar to above but for bottom row
-        for(int j=N*(N-1)+1; j<=N*N; j++)
-                this.uf.union(this.satellite2,j);
-
         for(int i=0; i<=N; i++) {
                 for(int j=0; j<=N; j++) {
                         grid[i][j] = false;
@@ -46,91 +40,22 @@ private int getIndex(int row,int col){
 }
 
 public void open(int row, int col){
-        // StdOut.printf("row %d , col %d",row,col);
-        // StdOut.println();
         if( !inRange(row) && !inRange(col) ) {
                 throw new java.lang.IndexOutOfBoundsException("row and column cannot be more than N and less than 1");
         }
         int left = 0, right = 0, top = 0,bottom = 0;
         int current = getIndex(row,col);
-        if( N == 1){
-            this.grid[row][col] = true;
+        if( isOpen(row,col) ) {
+                return;
         }
-        else if(row == 1 && col ==1) {
-                bottom = getIndex(row+1,col);
-                right = getIndex(row,col+1);
-                if( isOpen(row+1,col) )
-                        this.uf.union(current,bottom);
-                if( isOpen(row,col+1))
-                        this.uf.union(current,right);
+        if( row == 1) {
+                this.uf.union(current,this.satellite1);
         }
-        else if(row == N && col == N) {
-                top = getIndex(row-1,col);
-                left = getIndex(row,col-1);
-                if( isOpen(row-1,col))
-                        this.uf.union(current,top);
-                if( isOpen(row,col-1) )
-                        this.uf.union(current,left);
+        if( row == this.N) {
+                this.uf.union(this.satellite2,current);
         }
-        else if(col == 1 && row == N) {
-                top = getIndex(row-1,col);
-                right = getIndex(row,col+1);
-                if( isOpen(row-1,col) )
-                        this.uf.union(current,top);
-                if( isOpen(row,col+1) )
-                        this.uf.union(current,right);
-        }
-        else if(row ==1 && col == N) {
-                left = getIndex(row,col-1);
-                bottom = getIndex(row+1,col);
-                if( isOpen(row,col-1) )
-                        this.uf.union(current,left);
-                if( isOpen(row+1,col) )
-                        this.uf.union(current,bottom);
-        }
-        else if(col == 1) {
-                top = getIndex(row-1,col);
-                right = getIndex(row,col+1);
-                bottom = getIndex(row+1,col);
-                if( isOpen(row-1,col) )
-                        this.uf.union(current,top);
-                if( isOpen(row,col+1) )
-                        this.uf.union(current,right);
-                if( isOpen(row+1,col) )
-                        this.uf.union(current,bottom);
-        }
-        else if(row == 1) {
-                left = getIndex(row,col-1);
-                right = getIndex(row,col+1);
-                bottom = getIndex(row+1,col);
-                if( isOpen(row,col-1) )
-                        this.uf.union(current,left);
-                if( isOpen(row,col+1) )
-                        this.uf.union(current,right);
-                if( isOpen(row+1,col) )
-                        this.uf.union(current,bottom);
-        }
-        else if( row == N ) {
-                left = getIndex(row,col-1);
-                right = getIndex(row,col+1);
-                top = getIndex(row-1,col);
-                if( isOpen(row,col-1) )
-                        this.uf.union(current,left);
-                if( isOpen(row,col+1) )
-                        this.uf.union(current,right);
-                if( isOpen(row-1,col) )
-                        this.uf.union(current,top);
-        }
-        else if( col == N ) {
-                top = getIndex(row-1,col);
-                left = getIndex(row,col-1);
-                bottom = getIndex(row+1,col);
-                if( isOpen(row-1,col) )
-                        this.uf.union(current,top);
-                if( isOpen(row,col-1) )
-                        this.uf.union(current,left);
-                if( isOpen(row+1,col) )
-                        this.uf.union(current,bottom);
+        if(this.N == 1) {
+                this.grid[row][col] = true;
         }
         else{
                 top = getIndex(row-1,col);
@@ -151,6 +76,7 @@ public void open(int row, int col){
 }
 
 public boolean isOpen(int row,int col){
+
         if( !inRange(row) && !inRange(col) && this.N!=1) {
                 throw new java.lang.IndexOutOfBoundsException("row and column cannot be more than N and less than 1");
         }
@@ -162,7 +88,7 @@ public boolean isFull(int row,int col){
                 throw new java.lang.IndexOutOfBoundsException("row and column cannot be more than N and less than 1");
         }
         int current = getIndex(row,col);
-        return this.uf.connected(satellite1,current);
+        return this.uf.connected(this.satellite1,current);
 }
 
 public int numberOfOpenSites(){

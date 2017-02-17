@@ -3,7 +3,7 @@ import java.lang.IllegalArgumentException;
 import edu.princeton.cs.algs4.*;
 import java.lang.Math.*;
 
-public class Percolation {
+public class PercolationCopy {
 
 private boolean[][] grid;
 private WeightedQuickUnionUF uf;
@@ -12,7 +12,7 @@ private int numberOfOpen;
 private int satellite1;
 private int satellite2;
 
-public Percolation(int N){
+public PercolationCopy(int N){
 
         if(N <= 0) {
                 throw new IllegalArgumentException("number of grid cell cannot be less than or equal to zero");

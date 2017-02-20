@@ -16,6 +16,7 @@ public Deque(){
         this.first = null;
         this.last = null;
         this.count = 0;
+        assert check();
 }
 
 public boolean isEmpty(){
@@ -38,6 +39,7 @@ public void addFirst(Item item){
                 oldfirst.prev = this.first;
         }
         this.count += 1;
+        assert check();
 }
 
 public void addLast(Item item){
@@ -53,6 +55,7 @@ public void addLast(Item item){
                 this.last.prev = oldlast;
         }
         this.count += 1;
+        assert check();
 }
 
 public Item removeFirst(){
@@ -65,7 +68,10 @@ public Item removeFirst(){
         this.first = this.first.next;
         if(this.first!=null)
                 this.first.prev = null;
+        else
+                this.last = null;
         this.count -= 1;
+        assert check();
         return item;
 }
 
@@ -77,7 +83,10 @@ public Item removeLast(){
         this.last = this.last.prev;
         if(this.last!=null)
                 this.last.next = null;
+        else
+                this.first = null;
         this.count -= 1;
+        assert check();
         return item;
 }
 
@@ -101,10 +110,41 @@ private class ListIterator implements Iterator<Item> {
         }
 }
 
+private boolean check(){
+  if(this.count < 0){
+    return false;
+  }
+  else if(this.count == 0){
+    if(this.first != null || this.last !=null) return false;
+  }
+  else if(this.count == 1){
+    if(this.first == null || this.last == null) return false;
+    if(this.first !=this.last) return false;
+    if(this.first.next != null || this.first.prev!=null || this.last.prev != null || this.last.next!=null) return false;
+  }
+  else {
+    if(this.first == null || this.last == null) return false;
+    if(this.first.next == null || this.last.prev == null) return false;
+  }
+
+  int numberOfnodes = 0;
+  Node current = this.first;
+  while(current!=null){
+    numberOfnodes += 1;
+    current = current.next;
+  }
+  if(numberOfnodes != this.count) return false;
+
+  return true;
+}
+
 public static void main(String[] args){
         Deque<Integer> deque = new Deque<Integer>();
-        for(int i=1; i<=5; i++)
+        for(int i=6; i<=10; i++)
                 deque.addFirst(i);
+        for(int i=1;i<=5;i++)
+                StdOut.println(deque.removeFirst());
+        StdOut.println(deque.size());
         for(Integer q: deque)
                 StdOut.println(q);
 }
